@@ -109,13 +109,18 @@
 
 #### 複数のネットワークを経由して通信（インターネット通信）する際の注意点 : Path MTU Discovery Blackhole 問題
 
-- それぞれのネットワーク（ルータ）が直接扱うことができるパケットの最大長が異なるケースがある
+- それぞれのネットワーク（ルータ）が直接扱うことができるパケットの最大長（MTU）が異なるケースがある
   - 例えば、日本で NTT 系のフレッツ光などの回線を使う場合、PPPoE 接続を使うとイーサネット上で IPv4 パケットをカプセル化する際のヘッダが必要になるため、PPPoE で転送可能なパケットはその分最大長が短くなる
 - そのようなパケットをルータが転送する際は、パケットを複数に分割して（次の）宛先に送信する
-  - ところが、IPv4 パケットのヘッダで DF（フラグメント禁止）ビットが立っていると、そのパケットは分割転送できない
+  - 図 : https://milestone-of-se.nesuke.com/wp-content/uploads/2016/12/pmtud-01v2.png.webp
+- ところが、IPv4 パケットのヘッダで DF（フラグメント禁止）ビットが立っていると、そのパケットは分割転送できない
 - 分割禁止の場合、ルータは送信元に対して「最大パケット長は◯◯まで」という情報を ICMP（Type 3 / 4）を使って伝える
   - 送信元は指定に合わせてパケットサイズを短くして再送する
 - ここでファイアーウォールやパケットフィルタなどで ICMP をいたずらに遮断してしまうと、「最大パケット長は◯◯まで」という情報も伝わらず、通信が成立しない
+  - 図 : https://milestone-of-se.nesuke.com/wp-content/uploads/2016/12/black-hole-01.png.webp
+- Packetization Layer Path MTU Discovery という方法での回避が提案された
+  - 図 : https://milestone-of-se.nesuke.com/wp-content/uploads/2019/12/plpmtud-02.png.webp
+  - QUIC / HTTP/3 での利用のため、UDP に適用する Datagram Packetization Layer Path MTU Discovery が検討されている
 
 ### 3. DNS レコード
 
