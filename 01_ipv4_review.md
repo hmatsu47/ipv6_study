@@ -42,7 +42,7 @@
     - 基本的には 127.0.0.1 を使うことが多い
 - グローバルアドレス : インターネット通信用アドレス（パブリックアドレス）
   - 上記以外のアドレス範囲
-    - ICANN が管理しているアドレスを各地域の NIC 経由で各組織に割り当て
+    - ICANN が管理しているアドレスを RIR（地域インターネットレジストリ：Regional Internet Registry）から NIR（国別インターネットレジストリ：National Internet Registry）・LIR（Local Internet Registry）経由で各組織に割り当て
       - 参考 : https://www.nic.ad.jp/ja/ip/admin-basic.html
     - 実際には組織に割り当てずに特定目的用に予約されているアドレス範囲もある（例：192.0.2.0/24 などの例示用アドレス）
 
